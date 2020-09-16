@@ -4,7 +4,7 @@
 
 \begin{document}
 
-Minimum weight dominating set of size at least $k$
+Find the weight of the minimum weight dominating set of size at least $k$.
 
 First, we define an algorithm to find the mininum weight dominating set of
 size exactly $k$.
@@ -54,11 +54,17 @@ order.
 
 %TODO base cases
 
+%TODO final answer location
+
 Time complexity analysis:
 
 First, we compute a post-order traversal order for the tree, which takes
 $O(n)$ time. Next, we fill out 3 $n$ by $k$ tables. For each set of 3
 corresponding entries in the three \textsc{OPT} tables, we perform the
-algorithm from problem 1 on the input size
+algorithm from problem 1 on the input size $n_{p1} = |N(v)|, k_{p1} = O(k)$.
+For A, C, D, and E, this is done once per vertex. For B, this is done $|N(v)|$
+times per vertex $v$. We repeat the entire algorithm for $k$ values of $k$ up
+to $n$ to find the minimum weight dominating set of size at least k. This
+yields a total runtime of $O(n^3k^3(n-k))$.
 
 \end{document}
