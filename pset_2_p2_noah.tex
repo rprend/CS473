@@ -1,12 +1,39 @@
-\documentclass{article}
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{macros,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+\usepackage{amsmath}
+\usepackage{bbm}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+
+% =========================================================
+%   Define common stuff for solution headers
+% =========================================================
+\Class{CS/ECE 473}
+\Semester{Fall 2020}
+\Authors{3}
+\AuthorOne{Ryan Prendergast}{ryanp4}
+\AuthorTwo{Noah Watson}{nwatson3}
+\AuthorThree{Lawson Probasco}{lawsonp2}
+%\Section{}
 
 \usepackage{amsmath}
 
 \begin{document}
 
-Find the weight of the minimum weight dominating set of size at least $k$, in
-a tree.
+\HomeworkHeader{2}{2}
 
+Find the weight of the minimum weight dominating set of size at least $k$, in a tree.
+
+\begin{solution}
 First, we define an algorithm to find the mininum weight dominating set of
 size exactly $k$.
 
@@ -113,5 +140,7 @@ therefore the overall runtime for this section is $O(nk*(nk^2)) = O(n^2k^3)$.
 We then repeat the entire algorithm for target sum values of
 $k$ up to $n$, or $n - k$ times, to find the minimum weight dominating set of size at least k.
 This yields a total runtime of $O(n^2k^3(n-k))$.
+
+\end{solution}
 
 \end{document}
