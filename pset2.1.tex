@@ -47,7 +47,7 @@ We define the function minFuncSum(i,k) which finds the minimum function sum of $
 \\ 
 We find the minimum function sum of the original problem by calling minFuncSum(1, k). \\
 
-The above recurrence runs in expornential time. However we see that each iteration minFuncSum(i,k) depends on minFuncSum(i + 1, j) for all possible $j = 0 $ to $n$. We memoize in a 2d, $N*k$ array $A$ with the minimum function sum. We also memoize the value of $0 \leq k_i \leq k$ at which the minimum was found. \\ 
+The above recurrence runs in exponential time. However we see that each iteration minFuncSum(i,k) depends on minFuncSum(i + 1, j) for all possible $j = 0 $ to $n$. We memoize in a 2d, $N*k$ array $A$ with the minimum function sum. We also memoize the value of $0 \leq k_i \leq k$ at which the minimum was found. \\ 
 
 $A[i][j].\text{sum}$ holds the minimum of the functions $T_i...T_n$ subject to the constraint that $k_i...k_n$ sums to j; if $i = N$, then $A[n][j].\text{sum} = T_n(j)$. $A[i][j].\text{k}$ holds the value of $0 \leq k_i \leq k$ at which the minimum lies; if $i = N$, then $A[n][j].\text{k}=j$ \\
 
@@ -55,7 +55,7 @@ Due to the dependency ordering, we can define an iterative algorithm to fill in 
 
 To get the sequence $k_1...k_n$, we start at $A[1][k]$ after filling in the whole array with the above algo. $A[i][k].\text{k}$ is $k_1$, then we go to $A[2][k-k_1]$. $A[2][k-k_1].\text{k}$ is $k_2$. In general, $k_i= A[i][k-\sum_{j=1}^{i-1} k_j]$. \\ 
 
-See Algorithm 1 bellow. \\
+See Algorithm 1 below. \\
 
 \textbf{Time Complexity}
 As seen in Algorithm 1 bellow, filling in the array requires a nested loop over n and k, and each iteration requires $O(k)$ steps to find the minimum. So, the total runtime is $O(k^2*N)$. \\
