@@ -53,11 +53,11 @@ If we start an amount of currency $A$, and we trade to get more currency (i.e an
 
 We start the path-finding problem with $-log(A)$ units. Each edge we add the neative log of the exchange rate at that edge. The total . Since we have negative edge lengths, we use the Bellman-Ford algorithm which runs in $O(VE)$ time. There are no arbitrage cycles which means there are no negative length cycles (see part b).  \\
 
-To get the array MaxAmt$[1..n]$, we solve the shortest path problem n times starting at each index. See Algorithm 1 bellow. \\
+To get the array MaxAmt$[1..n]$, we solve the shortest path problem starting at index 1, then get the distance to each node. See Algorithm 1 bellow. \\
 
 \textbf{Time Complexity}
 Constructing the graph takes $O(V+E)=O(N^2)$ time.
-Bellman Ford runs in $O(VE)=O(N^3)$ time. We run this algorithm n times, giving a total runtime of $O(N^4)$. \\
+Bellman Ford runs in $O(VE)=O(N^3)$ time, which dominates the total runtime of $O(N^3)$. \\
 
 \textbf{Space Complexity} 
 Space complexity is dominated by the exchange rates matrix of size $O(N^2)$ used to construct the graph.
@@ -65,8 +65,9 @@ Space complexity is dominated by the exchange rates matrix of size $O(N^2)$ used
 \begin{algorithm}
 \caption{MaxAmt[1...n]}
 \begin{algorithmic}
+\STATE $\text{Run Bellman Ford SSSP on G from }v_1 \text{ with initial value of } -log(1).$
 \FOR{$i = 1$ to $i = n$}
-\STATE $\text{Run Bellman Ford SSSP on G from }v_i \text{ resulting in path length } L$
+\STATE $L \gets \text{distance from } v_1 \text{ to } v_n \text{ from the Bellman-Ford above}$
 \STATE $MaxAmt[i] = 10^{-L}$
 \ENDFOR
 \end{algorithmic}
