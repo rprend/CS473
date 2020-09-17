@@ -51,7 +51,7 @@ Each edge is one element of the summation. Note that taking the negative log of 
 \begin{solution}
 If we start an amount of currency $A$, and we trade to get more currency (i.e an exchange rate >1), this means we traverse a negative-length edge in our graph G.  Thus, the problem of finding the maximum amount of currency you can obtain starting with one unit of currency i is equivalent to the single source shortest paths problem in G starting at $v_i$. From the equation above, we see that $-log(A')=-log(A)+\sum_{i=1}^{k} -log(R_k)$. The last node in the shortest path is the node at which we have the most currenccy. \\ 
 
-We start the path-finding problem with $-log(A)$ units. Each edge we add the neative log of the exchange rate at that edge. The total . Since we have negative edge lengths, we use the Bellman-Ford algorithm which runs in $O(VE)$ time. There are no arbitrage cycles which means there are no negative length cycles (see part b).  \\
+We start the path-finding problem with $-log(A)$ units. Each edge we add the neative log of the exchange rate at that edge. Since we have negative edge lengths, we use the Bellman-Ford algorithm which runs in $O(VE)$ time. There are no arbitrage cycles which means there are no negative length cycles (see part b).  \\
 
 To get the array MaxAmt$[1..n]$, we solve the shortest path problem starting at index 1, then get the distance to each node. See Algorithm 1 bellow. \\
 
