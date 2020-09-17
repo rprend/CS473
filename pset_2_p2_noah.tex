@@ -4,7 +4,8 @@
 
 \begin{document}
 
-Find the weight of the minimum weight dominating set of size at least $k$.
+Find the weight of the minimum weight dominating set of size at least $k$, in
+a tree.
 
 First, we define an algorithm to find the mininum weight dominating set of
 size exactly $k$.
@@ -36,6 +37,27 @@ $$D = \min_{k_1,...,k_n} \left[\sum_{x=1}^n \textsc{OPT}_2(N(r)_x, k_x)\right], 
 k_i = k - 1 $$
 $$E = \min_{k_1,...,k_n} \left[\sum_{x=1}^n \textsc{OPT}_0(N(r)_x, k_x)\right], \sum_{i=1}^n
 k_i = k$$
+
+The \textsc{OPT} relations are the same, conceptually, as the ones defined in
+the lecture slides on the algorithm to find minimum dominating set in a tree.
+
+$\textsc{OPT}_0(r, k)$ is the minimum dominating set of size $k$ in the
+subtree rooted at $r$.
+
+$\textsc{OPT}_1(r, k)$ is the minimum dominating set which includes $r$ of size $k$ in the
+subtree rooted at $r$.
+
+$\textsc{OPT}_2(r, k)$ is the minimum weight set of size $k$ in the subtree
+rooted at $r$ which dominates all nodes in the set of nodes not including $r$
+itself.
+
+$A$ through $E$ are the updated, more general forms of the sums of the optimal
+solutions for the child nodes. Instead of merely taking the sum of the lowest
+weight solutions for the child nodes, we must choose between many different
+ways to split the remaining number of selectable nodes between the different
+subtrees. This is done by selecting the set $k_1,...,k_n$ that minimizes the
+value of the sum of weights, subject to the constraint that the sum of these $k_i$s must be $k-1$ or
+$k$, depending on whether the root node is included in the particular case.
 
 Note that the values of these expressions $A$ to $E$ can be computed by the
 algorithm from problem 1. Input the target sum of the $k_i$s as the target sum
@@ -80,8 +102,13 @@ Next, we fill out 3 $n$ by $k$ tables, where $n = |V|$. For each set of 3
 corresponding entries in the three \textsc{OPT} tables, we perform the
 algorithm from problem 1. For A, C, D, and E, this is done once per vertex. For B, this is done $|N(v)|$
 times per vertex $v$. However, there are only $n-1$ total neighbors, so the
-total number of times $B$ is also only $O(nk)$. The overall runtime for this
-section is thus $O(nk*(nk^2)) = O(n^2k^3)$.
+total number of times $B$ computed is also only $O(nk)$.
+
+The problem 1 algorithm runs in $O(xy^2)$ time, where $x$ is the size number
+of $T$ functions and $y$ is the target sum. for any time we run the algorithm,
+the input size is $x = N(v), y = k_0$, where $N(v) \in O(n)$ and $k_0 \leq k$,
+so any instance of the problem 1 algorithm used here will be $O(nk^2)$ and
+therefore the overall runtime for this section is $O(nk*(nk^2)) = O(n^2k^3)$.
 
 We then repeat the entire algorithm for target sum values of
 $k$ up to $n$, or $n - k$ times, to find the minimum weight dominating set of size at least k.
