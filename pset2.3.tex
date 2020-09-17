@@ -53,7 +53,7 @@ If we start an amount of currency $A$, and we trade to get more currency (i.e an
 
 We start the path-finding problem with $-log(A)$ units. Each edge we add the neative log of the exchange rate at that edge. The total . Since we have negative edge lengths, we use the Bellman-Ford algorithm which runs in $O(VE)$ time. There are no arbitrage cycles which means there are no negative length cycles (see part b).  \\
 
-To get the array MaxAmt$[1..n]$, we solve the shortest path problem n times starting at each index. See Algorithm 1 bellow. \\
+To get the array MaxAmt$[1..n]$, we solve the shortest path problem n times starting at each index. See Algorithm 1 below. \\
 
 \textbf{Time Complexity}
 Constructing the graph takes $O(V+E)=O(N^2)$ time.
