@@ -32,10 +32,7 @@
 
 
 
-\AuthorOne{Ryan Prendergast}{ryanp4}
-\AuthorTwo{Noah Watson}{nwatson3}
-
-\HomeworkHeader{1}{1}
+\HomeworkHeader{2}{1}
 
 \subsection *{1.a} Describe an algorithm to find an optimal solution $k_1...k_n$ that runs in time polynomial in $k$ and $n$. 
 \begin{solution}
@@ -85,5 +82,42 @@ The space required is dominated by the array A, which is size $O(N*k)$.
 \ENDFOR
 \end{algorithmic}
 \end{algorithm} 
+\end{solution}
+
+\clearpage
+
+
+\HomeworkHeader{2}{1}
+
+\subsection *{1.b} Describe an algorithm to find the optimal value $\sum_{i=1}^{n} k_i$ that runs in time polynomial in k and n, and uses O(k) space. 
+
+\begin{solution} We define an algorithm similar to the above, with the realization that we do not need to have access to the whole array A. \\ 
+
+We recognize the recurrence for this problem is the same as in problem (a), and we can solve this problem with the iterative algorithm in problem (a), taking only $A[1][k]$ as our solution. However, this take $O(k*n)$ space. \\
+
+So, we modify the memoization and iterative algorithm as follows: Instead of saving the $n*k$ array $A$, we save two k-vectors, $A[k]$ and $B[k]$. They represent the current and the previous columns in the 2d array we used in part (a). This is valid because each subproblem depends only on the subproblem at one index higher, so that is the only subproblem we need to save. \\ \\ 
+See algorithm 2 bellow. $A[j]$ stores the minimum function sum of the current problem such that the sequence of $k$'s sums to $j$. $B[j]$ stores the minimum function sum of the subproblem one index above such that the sequence of $k$'s sum to $j$.  Note we do not need to save $A[j].\text{k}$ or $B[k].\text{k}$ as we only need the sum.
+\begin{algorithm}
+\caption{Iterative Min Function Sum in k space}
+\begin{algorithmic}
+\FOR{$j=0$ to $j=k$}
+\STATE $B[j] = F_n(j)$
+\ENDFOR
+\FOR{$i = (n - 1)$ to $i = 1$}
+\FOR{$j=0$ to $j=k$}
+\STATE $A[j] = \text{min}_{h=0}^{h=j} \{ F_i(h) + B[j-h]$
+\ENDFOR
+\STATE $B \gets A$
+\ENDFOR
+\RETURN A[k]
+\end{algorithmic}
+\end{algorithm} 
+\\ 
+\textbf{Time Complexity} 
+Same as problem (a), the time complexity is $O(k^2*n)$.
+\\ \\
+\textbf{Space Complexity}
+Since we only save two k-vectors at a time, our total space use is 2*k which is $O(k)$.
+
 \end{solution}
 \end{document}
