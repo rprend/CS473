@@ -1,0 +1,51 @@
+\documentclass{article}
+
+\usepackage{lipsum}
+
+\begin{document}
+
+\section*{1.a}
+
+\begin{verbatim}
+p1(G = (V,E), v):
+    G' := copy(G)
+    for i in inc(v):
+        for j in out(v):
+            G'w(i,j) := min(G'w(i,j), Gw(i,v) + Gw(v,j))
+    return G'
+\end{verbatim}
+
+\section*{1.b}
+
+\begin{verbatim}
+p2(G = (V,E), G' = (V-v,E')):
+    for x in V:
+        minval := inf
+        for j in Gout(v):
+            minval := min(minval, Gw(v,j) + spd(j,x))
+        spd(v,x) := minval
+    for x in V:
+        minval := inf
+        for j in Gin(v):
+            minval := min(minval, Gw(j,v) + spd(x,j))
+        spd(x,v) := minval
+    return
+\end{verbatim}
+
+\section*{1.c}
+
+\begin{verbatim}
+APSP(G = (V,E)):
+    v := arbitrary vertex in V
+    if |V| = 1:
+        spd(v,v) := w(v,v)
+        return
+    G' := P1(G,v)
+    APSP(G')
+    P2(G,G',v)
+    spd(v,v) := ???
+    return 
+\end{verbatim}
+
+\end{document}
+
