@@ -43,7 +43,9 @@ APSP(G = (V,E)):
     G' := P1(G,v)
     APSP(G')
     P2(G,G',v)
-    spd(v,v) := ???
+    spd(v,v) := inf
+    for x in out(v):
+        spd(v,v) := min(spd(v,v), spd(x,v) + w(v,x))
     return 
 \end{verbatim}
 
