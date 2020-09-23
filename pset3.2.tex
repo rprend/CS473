@@ -1,0 +1,93 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{macros,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+\usepackage{amsmath}
+\usepackage{bbm}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+% =========================================================
+%   Define common stuff for solution headers
+% =========================================================
+\Class{CS/ECE 473}
+\Semester{Fall 2020}
+\Authors{3}
+\AuthorOne{Ryan Prendergast}{ryanp4}
+\AuthorTwo{Noah Watson}{nwatson3}
+\AuthorThree{Lawson Probasco}{lawsonp2}
+%\Section{}
+
+% =========================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+
+\HomeworkHeader{3}{2}
+\begin{solution}
+In order to reduce the space complexity of the subset sum problem, we will use the technique of splitting subproblems into size $n/2$ rather than the ordinary reduction in dynamic programming, which is just to reduce problem size by $1$. \\
+To be able to split the input array subset sum problem in half, we must know what the sum of the left half and right half should be so we can adjust the target sum for the recurive calls. To do this, we define a method lefthand\_sum which computes this value. \\
+It should be noted that the reason for defining this algorithm is because the subproblems where the input array $A$ is split in half can compute the output in the following way: $A_{sum = j} \circ A_{sum = T - j}$ where $A_{sum = j}$ is computed over the left half of the array $A[1,...,n/2]$, $A_{sum = T - j}$ is computed over the right half of the array $A[n/2,...,1]$, and $j$ is the output from lefthand\_sum. \\
+
+\lstinputlisting[language=Python]{lhs.py}
+
+This algorithm takes the result arrays from running subset sum (optimized for space without returning result) and searches all possible subset sums of A over all possible pairs of subset sums over the left and right half of A. It then returns the sum that was in the lefthand side for a subset that sums to T (if it exists, None otherwise). \\
+
+\textbf{Time Complexity}
+The time complexity of this algorithm is dominated by the calls to subset sum, which run in $O(nT)$ time.
+
+\textbf{Space Complexity}
+This algorithm assumes calls to subset sum are the optimized version that only uses linear space, thus the resulting space complexity of this algorithm is $O(n + T)$. \\
+
+\textbf{Algorithm}
+This lefthand\_sum can be used to solve the subset sum problem (with output) in the following algorithm.
+
+\lstinputlisting[language=Python]{q2.py}
+
+\textbf{Time Complexity}
+The time complexity of this algorithm is defined by the following recurrence (using lowercase t as target): $T(n,t) \leq O(nt) + T(n/2, j) + T(n - n/2, t - j)$. Using guess for $T$ s.t. $T(n,t) \leq \alpha * nt$, this can be approximated to (when ignoring floor computation of $n/2$) $T(n,t) \lesssim \beta * nt + \alpha * \frac{n}{2} * (t - j) = (\beta + \frac{\alpha}{2}nt)$, which is valid so long as $\alpha \geq 2 \beta$, meaning that $T(n,t) \leq O(nt)$, which is the target runtime.
+
+\textbf{Space Complexity}
+The space complexity of this algorithm is defined by the following recurrence (using lowercase t as target for consistency): $S(n,t) \leq max{O(n + T), S(n/2, t), S(n - n/2, t)}$, which is simply $S(n,t) \leq O(n + t)$, the target space complexity.
+
+\end{solution}
+
+\clearpage
+\end{document}
