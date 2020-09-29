@@ -1,0 +1,40 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\rX}{\mathsf{X}}
+
+\begin{document}
+
+\section*{a}
+
+Proof: $\E[e^{r\rX}] \leq e^{r\E[\rX] + r^2 \E[\rX]}$ for $r \leq \ln2$
+
+%We are given $1 + x \leq e^x \leq 1 + x + x^2$ for $x \leq \ln2$.
+
+%$$\E[e^{r\rX}] \leq e^{r\E[\rX] + r^2 \E[\rX]}$$
+%$$\impliedby \E[1+(r\rX)+(r\rX)^2] \leq e^{r\E[\rX] + r^2 \E[\rX]}$$
+%by the upper bound on $e^x$, and because 
+
+
+$$\E[e^{r\rX}] \leq e^{r\E[\rX] + r^2 \E[\rX]}$$
+by independence of $x_i$s:
+$$\impliedby \prod_i \E[e^{r\rX_i}] \leq e^{r\E[\rX] + r^2 \E[\rX]}$$
+by $e^x > 1 + x + x^2$, for $x \leq \ln2$, since $r \leq \ln2$ and $\rX_i \leq 1
+\implies r\rX_i \leq r$:
+$$\impliedby \prod_i \E[1+(r\rX_i) + (r\rX_i)^2] \leq e^{r\E[\rX] + r^2 \E[\rX]}$$
+$$\impliedby \prod_i \E[1+(r\rX_i) + (r\rX_i)^2] \leq \prod_i e^{(r+r^2)\E[\rX_i]}$$
+because $a_i \leq b_i \implies \prod_i a_i \leq \prod_i b_i$:
+$$\impliedby \forall i, \E[1 + (r\rX_i) + (r\rX_i)^2] \leq e^{(r+r^2)\E[\rX_i]}$$
+$$\impliedby \forall i, \E[1 + (r\rX_i) + r^2\rX_i^2] \leq e^{(r+r^2)\E[\rX_i]}$$
+because $\rX_i \leq 1 \implies \rX_i \geq \rX_i^2$
+$$\impliedby \forall i, \E[1 + r\rX_i + r^2\rX_i] \leq e^{r\E[\rX_i]+r^2\E[\rX_i]}$$
+by linearity of expectation:
+$$\impliedby \forall i, 1 + r\E[\rX_i] + r^2\E[\rX_i] \leq e^{r\E[\rX_i]+r^2\E[\rX_i]}$$
+by $1 + x \leq e^x$ for \textbf{all} $x$ (still needs to be proved):
+$$\impliedby \forall i, 1 + x \leq e^x, x = r\E[\rX_i] + r^2\E[\rX_i]$$
+
+
+\end{document}
