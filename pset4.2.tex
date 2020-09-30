@@ -1,0 +1,45 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\rX}{\mathsf{X}}
+\newcommand{\rY}{\mathsf{Y}}
+\newcommand{\Var}{\text{Var}}
+
+\begin{document}
+
+\section{a}
+
+$$\E[\rX]$$
+$$=\E[\sum_i \rX_i]$$
+$$=\sum_i \E[\rX_i]$$
+$$= n \E[\rX_i]$$
+$$= n \frac{1}{p}$$
+
+\
+
+$$\Var(\rX)$$
+$$= \Var(\sum_i \rX_i)$$
+$$= \sum_i \Var(\rX_i)$$
+$$= n \Var(\rX_i)$$
+$$= n \frac{1-p}{p^2}$$
+
+\section{b}
+
+$$\Pr[|\rX - \E[\rX]| \geq \epsilon] \leq \frac{\Var(\rX)}{\epsilon ^2}$$
+
+$$\Pr[|\rX - \frac{n}{p}| \geq \epsilon] \leq \frac{n \frac{1-p}{p^2}}{\epsilon ^2}$$
+
+$$\Pr[|\rX - \frac{n}{p}| \geq \epsilon] \leq \frac{n \frac{1-p}{p^2}}{\epsilon ^2}$$
+
+$$\Pr[\rX \geq (1+(n\frac{1-p}{p^2}))\frac{n}{p}] \leq
+\frac{1}{(n\frac{1-p}{p^2})\frac{n}{p}}$$
+
+$$\Pr[\rX \geq (\frac{p^2+n-np}{p^2})\E[\rX]] \leq
+\frac{p^3}{n^3-n^2p}$$
+
+$$c = $$
+
+\end{document}

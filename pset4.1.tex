@@ -5,6 +5,7 @@
 
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\rX}{\mathsf{X}}
+\newcommand{\rY}{\mathsf{Y}}
 
 \begin{document}
 
@@ -36,5 +37,52 @@ $$\impliedby \forall i, 1 + r\E[\rX_i] + r^2\E[\rX_i] \leq e^{r\E[\rX_i]+r^2\E[\
 by $1 + x \leq e^x$ for \textbf{all} $x$ (still needs to be proved):
 $$\impliedby \forall i, 1 + x \leq e^x, x = r\E[\rX_i] + r^2\E[\rX_i]$$
 
+\section*{b}
+
+Part a used independence of the $\rX_i$s when we were able to rewrite
+$\E[e^{r\rX}]$ as the product of $\E[e^{r\rX_i}]$ for $i$.
+
+\pagebreak
+
+\section*{c}
+
+\subsection*{i}
+
+%\begin{align}
+
+    %%x &= $\Pr[\rX \geq (1+\epsilon)\E[\rX]]$  & a
+
+    %u  &= \arctan x               dv &= 1 \, dx  \\
+
+%\end{align}
+\begin{align}
+    \Pr[\rX \geq (1+\epsilon)\E[\rX]]  \\
+    = \Pr[e^{r\rX} \geq e^{r(1+\epsilon)\E[\rX]}] && (r \geq 0) \\
+    \leq \frac{\E[e^{r\rX}]}{e^{r(1+\epsilon)\E[\rX]}} && \text{(Markov's inequality)} \\
+    \leq \frac{e^{(r+r^2)\E[\rX]}}{e^{r(1+\epsilon)\E[\rX]}} && \text{({Part
+    a, }}r \leq \ln 2) \\
+    = e^{(r+r^2 - r - r\epsilon)\E[\rX]} \\
+    = e^{(r^2 - r\epsilon)\E[\rX]} \\
+    = e^{-\epsilon^2\E[\rX]/4} && (r = \frac{\epsilon}{2})
+\end{align}
+
+We then have 
+
+$$\Pr[\rX \geq (1+\epsilon)\E[\rX]]$$
+
+for $$0 \leq\epsilon/2 \leq \ln 2 \implies 0 \leq \epsilon \leq \ln 4$$
+
+\subsection*{ii}
+
+\begin{align}
+    \Pr[\rX \geq (1+\epsilon)\E[\rX]]  \\
+    = \Pr[e^{r^2\rX} \geq e^{r^2(1+\epsilon)\E[\rX]}] && \\
+    \leq \frac{\E[e^{r^2\rX}]}{e^{r^2(1+\epsilon)\E[\rX]}} && \text{(Markov's inequality)} \\
+    \leq \frac{e^{(r^2+r^4)\E[\rX]}}{e^{r^2(1+\epsilon)\E[\rX]}} && \text{({Part
+    a, }}r^2 \leq \ln 2) \\
+    = e^{(r^2+r^4 - r^2 - r^2\epsilon)\E[\rX]} \\
+    = e^{(r^4 - r^2\epsilon)\E[\rX]} \\
+    = e^{-\epsilon^2\E[\rX]/4} && (r = \frac{\epsilon}{2})
+\end{align}
 
 \end{document}

@@ -1,0 +1,38 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\newcommand{\rX}{\mathsf{X}}
+\newcommand{\E}{\mathbb{E}}
+
+\begin{document}
+
+\section{a}
+
+\begin{verbatim}
+quicksort(A[n]):
+    if(|A| = 1):
+        return A
+    x := rand(n)
+    while(|B| < n/4 or |C| < n/4):
+        partition(A) =: (B, a, C)
+    A := (quicksort(B), a, quicksort(C))
+    return A
+
+\end{verbatim}
+
+\section{b}
+
+If
+$$\rX \propto \text{Geom}(\frac{1}{2})$$
+
+$$\E[T(n)] = \E[O(n)\rX]+\E[T(j-1)]+\E[T(n-j)]$$
+
+$$\E[T(n)] = O(n)\E[\rX]+\E[T(j-1)]+\E[T(n-j)]$$
+
+$$\E[T(n)] = 2O(n)+\E[T(j-1)]+\E[T(n-j)]$$
+
+$$\leq 2O(n)+T(1/4)+T(3/4)$$
+
+\end{document}
