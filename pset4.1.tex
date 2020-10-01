@@ -30,11 +30,11 @@ $$\impliedby \prod_i \E[1+(r\rX_i) + (r\rX_i)^2] \leq \prod_i e^{(r+r^2)\E[\rX_i
 because $a_i \leq b_i \implies \prod_i a_i \leq \prod_i b_i$:
 $$\impliedby \forall i, \E[1 + (r\rX_i) + (r\rX_i)^2] \leq e^{(r+r^2)\E[\rX_i]}$$
 $$\impliedby \forall i, \E[1 + (r\rX_i) + r^2\rX_i^2] \leq e^{(r+r^2)\E[\rX_i]}$$
-because $\rX_i \leq 1 \implies \rX_i \geq \rX_i^2$
+because $\rX_i \leq 1 \implies \rX_i \geq \rX_i^2$:
 $$\impliedby \forall i, \E[1 + r\rX_i + r^2\rX_i] \leq e^{r\E[\rX_i]+r^2\E[\rX_i]}$$
 by linearity of expectation:
 $$\impliedby \forall i, 1 + r\E[\rX_i] + r^2\E[\rX_i] \leq e^{r\E[\rX_i]+r^2\E[\rX_i]}$$
-by $1 + x \leq e^x$ for \textbf{all} $x$ (still needs to be proved):
+by $1 + x \leq e^x$ for all $x$:
 $$\impliedby \forall i, 1 + x \leq e^x, x = r\E[\rX_i] + r^2\E[\rX_i]$$
 
 \section*{b}
@@ -76,13 +76,51 @@ for $$0 \leq\epsilon/2 \leq \ln 2 \implies 0 \leq \epsilon \leq \ln 4$$
 
 \begin{align}
     \Pr[\rX \geq (1+\epsilon)\E[\rX]]  \\
-    = \Pr[e^{r^2\rX} \geq e^{r^2(1+\epsilon)\E[\rX]}] && \\
-    \leq \frac{\E[e^{r^2\rX}]}{e^{r^2(1+\epsilon)\E[\rX]}} && \text{(Markov's inequality)} \\
-    \leq \frac{e^{(r^2+r^4)\E[\rX]}}{e^{r^2(1+\epsilon)\E[\rX]}} && \text{({Part
-    a, }}r^2 \leq \ln 2) \\
-    = e^{(r^2+r^4 - r^2 - r^2\epsilon)\E[\rX]} \\
-    = e^{(r^4 - r^2\epsilon)\E[\rX]} \\
+    = \Pr[e^{r\rX} \geq e^{r(1+\epsilon)\E[\rX]}] && (r \geq 0) \\
+    \leq \frac{\E[e^{r\rX}]}{e^{r(1+\epsilon)\E[\rX]}} && \text{(Markov's inequality)} \\
+    \leq \frac{e^{(r+r^2)\E[\rX]}}{e^{r(1+\epsilon)\E[\rX]}} && \text{({Part
+    a, }}r \leq \ln 2) \\
+    = e^{(r+r^2 - r - r\epsilon)\E[\rX]} \\
+    = e^{(r^2 - r\epsilon)\E[\rX]} \\
+    = e^{((\ln2)^2-\epsilon\ln2)\E[\rX]} && (r = \ln 2)\\
+    = 2^{(\ln2-\epsilon)\E[\rX]}\\
+    \leq 2^{-\epsilon\E[\rX]/2} && (\epsilon \geq \ln 4)
+\end{align}
+
+\subsection*{iii}
+
+\begin{align}
+    \Pr[\rX \leq (1-\epsilon)\E[\rX]]  \\
+    = \Pr[e^{-r\rX} \geq e^{-r(1-\epsilon)\E[\rX]}] && (r \geq 0) \\
+    \leq \frac{\E[e^{-r\rX}]}{e^{-r(1-\epsilon)\E[\rX]}} && \text{(Markov's inequality)} \\
+    \leq \frac{e^{(-r+(-r)^2)\E[\rX]}}{e^{-r(1-\epsilon)\E[\rX]}} && \text{({Part
+    a, }}-r \leq \ln 2 \implies r \geq -\ln2) \\
+    = e^{(-r+r^2 + r - r\epsilon)\E[\rX]} \\
+    = e^{(r^2 - r\epsilon)\E[\rX]} \\
     = e^{-\epsilon^2\E[\rX]/4} && (r = \frac{\epsilon}{2})
+\end{align}
+
+So for $r = \frac{\epsilon}{2} \geq 0 \implies \epsilon \geq 0$, the claim
+holds.
+
+\subsection*{iv}
+
+\begin{align}
+    \Pr[\rX - \E[\rX] \geq \epsilon n ]  \\
+    \Pr[\rX - \E[\rX] \geq \frac{\epsilon n \E[\rX]}{\E[\rX]}]  \\
+    \Pr[\rX \geq \frac{\epsilon n \E[\rX]}{\E[\rX]} + \E[\rX]]  \\
+    \Pr[\rX \geq (\frac{\epsilon n}{\E[\rX]} + 1) \E[\rX]]  \\
+    \leq e^{-(\frac{\epsilon n}{\E[\rX]})^2 \E[\rX]/4} && (\text{Part i,}
+    \frac{\epsilon n}{\E[\rX]} \leq \ln 4)\\
+    = e^{-\frac{\epsilon^2 n^2}{\E[\rX]^2} \E[\rX]/4}\\
+    = e^{-\frac{\epsilon^2 n^2}{\E[\rX]}/4}\\
+    \leq e^{-\epsilon^2 n/4} && (n \geq \E[\rX])\\
+    \\
+    \leq 2^{-\frac{\epsilon n}{\E[\rX]} \E[\rX]/2} && (\text{Part ii, } \frac{\epsilon
+    n}{\E[\rX]} \geq \ln 4)
+\\
+    = 2^{-\epsilon n /2}\\
+    \leq e^{-\epsilon^2 n / 4}\\
 \end{align}
 
 \end{document}
