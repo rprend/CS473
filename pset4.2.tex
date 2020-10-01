@@ -1,45 +1,107 @@
-\documentclass{article}
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
 
+\documentclass[11pt]{article}
+\usepackage{macros,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
 \usepackage{amsmath}
-\usepackage{amsfonts}
+\usepackage{bbm}
 
-\newcommand{\E}{\mathbb{E}}
-\newcommand{\rX}{\mathsf{X}}
-\newcommand{\rY}{\mathsf{Y}}
-\newcommand{\Var}{\text{Var}}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+% =========================================================
+%   Define common stuff for solution headers
+% =========================================================
+\Class{CS/ECE 473}
+\Semester{Fall 2020}
+\Authors{3}
+\AuthorOne{Ryan Prendergast}{ryanp4}
+\AuthorTwo{Noah Watson}{nwatson3}
+\AuthorThree{Lawson Probasco}{lawsonp2}
+%\Section{}
+
+% =========================================================
 \begin{document}
 
-\section{a}
+% ---------------------------------------------------------
 
-$$\E[\rX]$$
-$$=\E[\sum_i \rX_i]$$
-$$=\sum_i \E[\rX_i]$$
-$$= n \E[\rX_i]$$
-$$= n \frac{1}{p}$$
 
-\
 
-$$\Var(\rX)$$
-$$= \Var(\sum_i \rX_i)$$
-$$= \sum_i \Var(\rX_i)$$
-$$= n \Var(\rX_i)$$
-$$= n \frac{1-p}{p^2}$$
+\HomeworkHeader{4}{2}
+\begin{enumerate}[(a)]
+\item
+\begin{solution}
+    \begin{align*}
+        \E[X] &= \E[X_1 + ... + X_n] = \Sigma_{i=1}^n \E[X+i] & \text{linearity of expectation} \\
+             &= \Sigma_{i=1}^n \Sigma_x xp(1-p)^{i-1} & \text{defn. of E} \\
+             &= \Sigma{i=1}^n \frac{1-p}{p} & \text{expectation for geometric} \\
+             &= \frac{n(1-p)}{p} & \\
+    \end{align*}
+    \begin{align*}
+        \E[X^2] &= \E[(X_1 + ... + X_n)^2] & X = \Sigma_{i} X_i \\
+               &= \E[{X_1}^2 + X_1X_1 + ... + {X_n}^2] & \\
+               &= \Sigma_{i=1}^n \E[X_{i}^2] + \Sigma_{i,j \in |n|, i \neq j}^n \E[X_i X_j] & \text{linearity of expectation} \\
+        \E[X]^2 &= (\E[X_1] + ... + \E[X_2])^2 & \text{linearity of expectation} \\
+               &= \Sigma{i=1}^n \E[X+i]^2 +\Sigma_{i,j \in |n|, i \neq j}^n \E[X_i X_j] & \text{indep. of $X_i$ $X_i$ $i \neq j$} \\
+        Var(X) &= \E[X^2]- \E[X]^2 & \text{defn. of var in terms of E} \\
+               &= \Sigma{i=1}^n \E[X_i^2] - \Sigma_{i=1}^n \E[X_i]^2 & \text{$\E[X^2]$ and $\E[X]^2$ from above} \\
+               &= \Sigma_{i=1}^n (\E[X_i^2] - \E[X_i]^2) & \\
+               &= \Sigma_{i=1}^n Var(X_i) & \\
+    \end{align*}
+\end{solution}
 
-\section{b}
+\item
+\begin{solution}
+    When applying Chebyschev's inequality $Pr[|(X - \E[X])] \geq \epsilon]$ to $Pr[X \geq c\E[X]$, because $X$ is always positive (as is $\E[X]$ naturally), there are two cases for the absolute value. \\
+    $X - \E[X]$ where $X >= \E[X] >= 0$ is a positive or zero value, and thus would never deviate from $|X - \E[X]|$. \\
+    $X - \E[X]$ where $0 <= X < \E[X]$ is a negative value $v$ in the range $\E[X] <= v < 0$. Thus, in order for Chebyschev's to be applied to $(X - \E[X])$, $\epsilon$ must satisfy $\epsilon \geq -\E[X]$, such that there is no difference of evaluation of $|X - \E[X]| \geq \epsilon$ and $X - \E[X] \geq \epsilon$. Because $\epsilon = c\E[X]$ satisfies this requirement for $c \geq 2$, we get $Pr[X \geq \E[X]] \leq \frac{Var(X)}{\E[X]^2}$ applying Chebyschev's, and using values from the previous part.
+\end{solution}
 
-$$\Pr[|\rX - \E[\rX]| \geq \epsilon] \leq \frac{\Var(\rX)}{\epsilon ^2}$$
+\item
+\begin{solution}
+    The event $X > t$ is describes the occurrence in which $X > t$ flips are required to yield $n$ flips of heads. As a result, by definition this means that the first $t$ flips yieled fewer than $n$ heads, e.g. $Y < n$. As a result, $Pr[X > t] = Pr[Y < n]$. Considering the case where $Pr[X = t]$, there are $\binom{t-1}{n-1}$ ways to partition the t flips into n groups (dilineated by a successful flip of heads, using stars and bars). Each of these ways to partition have probability $p^n(1-p)^{t-n}$ (based on number of successes and failures), therefore $Pr[X = t] = \binom{t-1}{n-1}p^n(1-p)^{t-n}$. $Pr[Y = n]$ is modeled by a binomial distribution, thus $Pr[Y = n] = \binom{t}{n}p^n(1-p)^{t-n}$ This leads to $Pr[X = t] \leq Pr[Y = n]$, and thus $Pr[X \geq t] \leq Pr[Y \leq n]$.
+    \\
+\end{solution}
 
-$$\Pr[|\rX - \frac{n}{p}| \geq \epsilon] \leq \frac{n \frac{1-p}{p^2}}{\epsilon ^2}$$
+\item
+\begin{solution}
+    In this application, $\epsilon = c - 1$, e.g. is $\epsilon$ is over the bound $\epsilon \geq 1$. Applying part 1c i for the first applicable portion of this bound, we can say that $Pr[X \geq c\E[X]] \leq e^{-(c-1)^2\E[X]/4}$ for $2 \leq c \leq 2 + \ln{4}$. Similarly for second portion of the bound of $c$,  we can apply part 1c ii and say that $Pr[X \geq c\E[X]] \leq 2^{-(c-1)\E[X]/2}$ for $c \geq \ln{4}$, and thus we have bound $Pr[X \geq c\E[X]]$ for $c \geq 2$.
+\end{solution}
 
-$$\Pr[|\rX - \frac{n}{p}| \geq \epsilon] \leq \frac{n \frac{1-p}{p^2}}{\epsilon ^2}$$
+\end{enumerate}
 
-$$\Pr[\rX \geq (1+(n\frac{1-p}{p^2}))\frac{n}{p}] \leq
-\frac{1}{(n\frac{1-p}{p^2})\frac{n}{p}}$$
-
-$$\Pr[\rX \geq (\frac{p^2+n-np}{p^2})\E[\rX]] \leq
-\frac{p^3}{n^3-n^2p}$$
-
-$$c = $$
-
+\clearpage
 \end{document}
