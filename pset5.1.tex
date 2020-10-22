@@ -1,0 +1,75 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{macros,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+\usepackage{amsmath}
+\usepackage{bbm}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+
+% =========================================================
+%   Define common stuff for solution headers
+% =========================================================
+\Class{CS/ECE 473}
+\Semester{Fall 2020}
+\Authors{3}
+\AuthorOne{Ryan Prendergast}{ryanp4}
+\AuthorTwo{Noah Watson}{nwatson3}
+\AuthorThree{Lawson Probasco}{lawsonp2}
+%\Section{}
+
+% =========================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+
+\HomeworkHeader{5}{1}
+Suppose you want to estimate the average of $n$ numbers via sampling, for example the average wealth of people in a town. The average can be very skewed by outliers — perhaps there are a few billionaires that will not make
+it to the sample but will clearly affect the average. However, we can obtain an accurate estimate if we assume that the numbers are within some limited range. Assume the input numbers $z_1, z_2, . . . , z_n$ are from $[a, b]$ where $a, b \in R$ with $a \leq b$. Suppose you sample k input numbers (with replacement) and output their average as the estimate for the true average $\alpha = (\sum_i
+(z_i)/n$. Let $X$ be the random variable denoting the output value. \\  \\
+Using Chebyshev’s inequality, show that for $k \geq \frac{(b-a)^2}{\delta \epsilon^2}$, we have
+\begin{align*}
+Pr[|X-\alpha| \geq \epsilon] \leq \delta
+\end{align*}
+
+\begin{solution}
+First we find the variance of one of the samples $x_i$ from the set $z_1, z_2, ...z_n$. Since it is a bounded random variable, the variance cannot be larger than the square of the size of the bounds (the most any samples could deviate by is b-a). We also note that the samples $x_i$ are IID. The random variable $X=\sum_{i=0}^{k}(x_i)/k$.
+
+\begin{align*}
+Var[x_i]&\leq  (b-a)^2  & \text{upper bound of variance} \\
+Var[\sum_{i=0}^{k}x_i]&\leq  k(b-a)^2 & \text{linearity of variances of IIDs}\\
+Var[X]&\leq  \frac{1}{k^2}Var[\sum_{i=0}^{k}x_i] & \text{definition of variance}\\
+Var[X]&\leq  \frac{(b-a)^2}{k} & \text{simplification}
+\end{align*}
+
+By definition, $\alpha=E[X]$. We can use Chebyshev's inequality to bound $Pr[|X-\alpha| \geq \epsilon]$ for $\epsilon>0$:
+\begin{align*}
+Pr[|X-\alpha| \geq \epsilon] &\leq \frac{Var[X]}{\epsilon^2} & \text{Definition of Chebyshev} \\
+Pr[|X-\alpha| \geq \epsilon] &\leq \frac{(b-a)^2}{k\epsilon^2} & \text{substitution}. 
+\end{align*} 
+Given $k \geq \frac{(b-a)^2}{\delta \epsilon^2}$, we substitute for k. This lower bound for k, when substituted for k, serves as an upper bound for the probability, as k is raised to a negative power.
+\begin{align*}
+Pr[|X-\alpha| \geq \epsilon] &\leq \frac{(b-a)^2 \delta \epsilon^2}{(b-a)^2 \epsilon^2} & \text{substitution} \\
+Pr[|X-\alpha| \geq \epsilon] &\leq \delta
+\end{align*} 
+\end{solution}
+\clearpage
+\HomeworkHeader{5}{1}
+
+Using the Chernoff inequality, show that there exists a constant $c > 0$ such that for $k\geq \frac{c(b-a)^2log(2\\delta)}{\epsilon^2}$, we have
+\begin{align*}
+Pr[|X-\alpha| \geq \epsilon] \leq \delta
+\end{align*}
+\beign{solution}
+h
+\end{solution}
+\end{document}
