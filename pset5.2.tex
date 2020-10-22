@@ -84,7 +84,7 @@
 
 \item
 \begin{solution}
-    WIP.
+    In order to be $2$-uniform (as above), $Pr_{h \in \mathcal{M^+}}[h(x) = i] = \frac{1}{m} \text{ for all } x \text{ and } i$. Considering that there will be (without loss of generality, since independent $h(x),h(y)$ can be flipped) at least one bit in $y$ with a value of $0$, we come to the conclusion that there will always be some column in $M$ - refer to it as $M_i$, in which $M_i$ does not contribute in any way to the calculation of $v_2$ but does contribute to the calculation of $v_1$ as in $Pr[h(x) = v_1 | h(y) = v_2]$. As a result, we can fix this column $M_i$ s.t. $v_2 \oplus M_i = v_1$, e.g. $M_i = v1 \oplus v_2$, more precisely the xor of the unique columns of $v_1$ and $v_2$. Since there are $l$-bits in this vector, the likelihood is then $\frac{1}{2^l} = \frac{1}{m}$. Thus $Pr[h(x) = a \text{ and } h(y) = b] = Pr[h(x) = a] * Pr[h(x) = b] = \frac{1}{m^2}$.
 \end{solution}
 
 \item
