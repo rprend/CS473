@@ -42,12 +42,12 @@ Pr[|X-\alpha| \geq \epsilon] \leq \delta
 \end{align*}
 
 \begin{solution}
-First we find the variance of one of the samples $x_i$ from the set $z_1, z_2, ...z_n$. Since it is a bounded random variable, the variance cannot be larger than the square of the size of the bounds (the most any samples could deviate by is b-a). We also note that the samples $x_i$ are IID. The random variable $X=\sum_{i=0}^{k}(x_i)/k$.
+First we find the variance of one of the samples $x_i$ from the set $z_1, z_2, ...z_n$. Since it is a bounded random variable, the variance cannot be larger than the square of the size of the bounds (the most any samples could deviate by is b-a). We also note that the samples $x_i$ are IID. The random variable $X=\sum_{i=1}^{k}(x_i)/k$.
 
 \begin{align*}
 Var[x_i]&\leq  (b-a)^2  & \text{upper bound of variance} \\
-Var[\sum_{i=0}^{k}x_i]&\leq  k(b-a)^2 & \text{linearity of variances of IIDs}\\
-Var[X]&\leq  \frac{1}{k^2}Var[\sum_{i=0}^{k}x_i] & \text{definition of variance}\\
+Var[\sum_{i=1}^{k}x_i]&\leq  k(b-a)^2 & \text{linearity of variances of IIDs}\\
+Var[X]&\leq  \frac{1}{k^2}Var[\sum_{i=1}^{k}x_i] & \text{definition of variance}\\
 Var[X]&\leq  \frac{(b-a)^2}{k} & \text{simplification}
 \end{align*}
 
@@ -65,11 +65,26 @@ Pr[|X-\alpha| \geq \epsilon] &\leq \delta
 \clearpage
 \HomeworkHeader{5}{1}
 
-Using the Chernoff inequality, show that there exists a constant $c > 0$ such that for $k\geq \frac{c(b-a)^2log(2\\delta)}{\epsilon^2}$, we have
+Using the Chernoff inequality, show that there exists a constant $c > 0$ such that for $k\geq \frac{c(b-a)^2log(2/\delta)}{\epsilon^2}$, we have
 \begin{align*}
 Pr[|X-\alpha| \geq \epsilon] \leq \delta
 \end{align*}
-\beign{solution}
-h
+\begin{solution}
+ We cite this source http://math.mit.edu/~goemans/18310S15/chernoff-notes.pdf for the Chernoff Bound of a bounded random variable. \\ \\
+We start again by considering the individual random variables $X_i$. We note that our symmetric analysis $|X-\alpha|$ requires that we add the upper tail and the lower tail Chernoff bounds. This gives us:
+\begin{align*}
+Pr[|X_i-\alpha| \geq \epsilon] &\leq Pr[X_i-\alpha \geq \epsilon] + Pr[X_i-\alpha \leq -\epsilon] \\ 
+Pr[|\sum_{i=1}^{k}(X_i)-k*\alpha| \geq \epsilon] &\leq 2 exp(\frac{-2\epsilon^2}{k(b-a)^2}) & \text{MIT Notes Citation} \\
+Pr[|X_i-\alpha| \geq \epsilon] &\leq 2 exp(\frac{-2\epsilon^2}{(b-a)^2}) & \text{Single Sample} \\
+Pr[|X-\alpha| \geq \epsilon] &\leq 2 exp(\frac{-2\epsilon^2*k}{(b-a)^2}) & \text{Lecture 8} \\
+\end{align*}
+We want to find a value c such that $Pr[|X-\alpha| \geq \epsilon] &\leq \delta$ given $k\geq \frac{c(b-a)^2log(2/\delta)}{\epsilon^2}$. So, we solve for k given an upper bound of $\delta$.
+\begin{align*}
+2 exp(\frac{-2\epsilon^2*k}{(b-a)^2}) &\leq \delta & \text{} \\
+\frac{-2\epsilon^2*k}{(b-a)^2} &\leq log(\delta/2) \\
+\epsilon^2*k &\geq (b-a)^2(1/2)log(2/\delta) \\
+k &\geq \frac{1/2(b-a)^2log(2/\delta)}{\epsilon^2}
+\end{align*}
+We can clearly see above that the value $c=1/2$ gives us a lower bound for k at which $Pr[|X-\alpha| \geq \epsilon] &\leq \delta$. Thus such a constant exists.
 \end{solution}
 \end{document}
