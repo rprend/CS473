@@ -1,0 +1,98 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{macros,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+\usepackage{amsmath}
+\usepackage{esvect}
+\usepackage{bbm}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+% =========================================================
+%   Define common stuff for solution headers
+% =========================================================
+\Class{CS/ECE 473}
+\Semester{Fall 2020}
+\Authors{3}
+\AuthorOne{Ryan Prendergast}{ryanp4}
+\AuthorTwo{Noah Watson}{nwatson3}
+\AuthorThree{Lawson Probasco}{lawsonp2}
+%\Section{}
+
+% =========================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+
+\HomeworkHeader{5}{2}
+\begin{enumerate}[(a)]
+\item
+\begin{solution}
+    \begin{align}
+        Pr_{h \in \mathcal{M}}[h(x) = h(y)] &= Pr[\bigoplus_{i: x_i = 1} M_i = \bigoplus_{i: y_i = 1} M_i] \\
+        &= Pr[(\bigoplus_{i: x_i = y_i = 1} M_i) \oplus (\bigoplus_{i: y_i = 0, x_i = 1} M_i) = (\bigoplus_{i: x_i = y_i = 1} M_i]) \oplus (\bigoplus_{i: x_i = 0, y_i = 1} M_i)] \\
+        &= Pr[(\bigoplus_{i: y_i = 0, x_i = 1} M_i) = (\bigoplus_{i: x_i = 0, y_i = 1} M_i)] \\
+        &= Pr[(\bigoplus_{i: y_i = 0, x_i = 1} M_i) \oplus (\bigoplus_{i: x_i = 0, y_i = 1} M_i) = 0] \\
+        &= Pr[h(z) = 0] \\
+        &\leq \frac{1}{2^l} \\
+        &\leq \frac{1}{m}
+    \end{align}
+    Annotating the equations down here to avoid clutter. Essentially, the rewriting in (1) is simply using the definition of $h_M$. (2) uses the fact that each pair of distinct input vectors $x,y$ have at least one differing bit, meaning they produce some zero or more shared columns of $M$ and some one or more different columns of $M$. The shared columns on each side are dropped in $(3)$, and the right side is moved over in $(4)$. The resulting equation in $(4)$ is the xor of a set of at least one unique column(s) of $M$, which in turn can be rewritten as some $h(z)$ since this is exactly what the hash function produces anyways. This probability can be evaluated in the following manner - fix one non-zero column $M_{j}$ representing by a corresponding $1$-bit in $z$. This means that $M_{j} = \bigoplus_{i: x_1 = 1, i \neq j} M_i$. This probability is bounded by the $l$ random bits in $M_{j}$, meaning that $Pr[h(z) = 0] \leq \frac{1}{2^l} = \frac{1}{m}$.
+\end{solution}
+
+\item
+\begin{solution}
+    In order to be uniform, $Pr_{h \in \mathcal{M}}[h(x) = i] = \frac{1}{m} \text{ for all } x \text{ and } i$. However, in the case where $x$ is $\vv{0}$, and $i$ is $\vv{1}$, $Pr_{h \in \mathcal{M}}[h(x) = i] = 0$.
+\end{solution}
+
+\item
+\begin{solution}
+    WIP.
+\end{solution}
+
+\item
+\begin{solution}
+
+\end{solution}
+        In order to be $4$-uniform, $Pr_{h \in \mathcal{M}^+}[\bigwedge_{j=1}^{4} h(x_j) = i_j] = \frac{1}{m^4} \text{ for all distinct } x_1,...,x_4 \text{ and } i_1,...,i_4$. However, consider the case where $x_2$ is the input vector with each even bit set, $x_3$ is the input vector with each odd bit set, and $x_4$ is the input vector $\vv{0}$. In this case then, $Mx_4 = \vv{0}$, meaning $i_4 = b$. If $x_1$ is the input vector $\vv{1}$, this would mean that $i_1 = i_2 \oplus i_3 \oplus i_4$, and as such, these values are not independent and $Pr_{h \in \mathcal{M}^+}[\bigwedge_{j=1}^{4} h(x_j) = i_j] \neq \frac{1}{m^4}$.
+\end{enumerate}
+
+\clearpage
+\end{document}
