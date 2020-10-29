@@ -48,7 +48,7 @@ same between $F$ and $G$.
 First, note that in the case where $f(e) < c(e)$, the solution is trivial,
 since there is no need to change the flow.
 
-In the case that $f(e) = c(e)$, we must find a new flow. Cancel 1 unit of flow
+In the case that $f(e) = c(e)$, we must look for a new flow. Cancel 1 unit of flow
 off a path from $s$ to $t$ going through $e$. To do this, label $u$ and $v$
 such that $e$ is the edge from $u$ to $v$. Find the path with
 the fewest edges from $s$ to $u$ using a breadth-first search. Find the
@@ -59,7 +59,11 @@ and go to somewhere. Subtract one flow unit from each of these edges. This new
 flow is of value at least $|f| - 1$.
 
 Since a single path augmentation is guaranteed to increase the flow by some
-positive integer value, by augmenting this new path, we are guaranteed to get
-a flow of value $|f|$.
+positive integer value, if the flow is not already maximum, by augmenting this
+new path, we are guaranteed to get a flow of value $|f|$, or if none exists, a
+flow value of $|f| - 1$, which is then guaranteed to be a maximum flow.
+
+The 2 breadth-first searches take $O(n+m)$ time each, and the augmentation
+procedure takes $O(m)$, so the algorithm runs in $O(n+m)$ time.
 
 \end{document}
