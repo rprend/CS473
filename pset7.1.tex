@@ -1,0 +1,64 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{}
+
+Prove that in any Eulerian graph, if there are $k$ edge-disjoint paths from $a$
+to $b$, there are $k$ edge-disjoint paths from $b$ to $a$:
+
+First define a flow network $G$ in terms of the input graph. Assign a capacity
+of 1 to each edge in $G$. This graph has some maximum flow of capacity $m$.
+Using the argument from page 353 of the Algorithms Textbook, $m$ will also be the
+maximum number of edge-disjoint paths from $a$ to $b$, and $m \geq k$.
+
+By the maxflow mincut theorem, the minimum $(a,b)$ cut of the graph is of capacity
+$m$.
+
+Since this cut is a partitioning into 2 sections of an Eulerian graph, the
+number of edges from $L$ to $R$, or $m$, is equal to the number of edges from $R$ to
+$L$. This same partitioning is also a $(b,a)$ cut with capacity $m$. It is the
+smallest $(b,a)$ cut because if there was a smaller one, it would have
+capacity less than $m$, meaning it would have less than $m$ incoming or
+outgoing edges, which would imply there was a smaller $(a,b)$ cut than the one
+we found.
+
+Then, again by the maxflow-mincut theorem, the maximum $(b,a)$ flow is $m$,
+and by the textbook argument, there exists a set of $m$ edge-disjoint paths in
+the input graph from $b$ to $a$. Since $m \geq k$, there is also a set of $k$
+edge-disjoint paths from $b$ to $a$.
+
+\section{}
+
+Proof that any $d$-regular bipartite graph has a perfect matching.
+
+Define a flow network $G$ based on the graph, by adding a vertex $a$ and $b$,
+connecting $a$ to all vertices in $L$, $b$ to all vertices in $R$, and setting
+all edge capacities to 1.
+
+Note that in a d-regular bipartite graph, there are $\frac{|V|}{2} = k$
+vertices in each of $L$ and $R$. If there were more vertices on one side,
+there would be too many outgoing edges to cover the fewer vertices on the
+other side, assuming $d > 0$.
+
+Let $m$ be defined as the maximum $(a,b)$ flow of $G$.
+
+By the maxflow-mincut theorem, $m$ is also the size of the minimum $(a,b)$ cut.
+
+I claim that the smallest cut of the graph is of size $k$.
+
+The cut $(\{a\}, G\setminus \{a\})$ is of size $k$.
+
+The cut $(G\setminus \{b\}, \{b\})$ is of size $k$.
+
+Any other cut is size $\geq k$ because it will include at least one of the original
+(not $a$ or $b$) vertices in the left partition and in the right partition, as
+those are the remaining cases.
+
+For any vertex in the right side of the bipartite graph, it will contribute 1 to the
+cut size. If it is in the $a$ side of the cut, the edge neighboring it with
+$b$ will be counted. If it is in the $b$ side of the cut, if it is connected
+to a vertex in the left side of the bipartite graph which is in the $a$ side
+of the cut, the
+
+\end{document}
