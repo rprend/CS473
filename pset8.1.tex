@@ -21,8 +21,8 @@ every edge capacity range is $[0, \infty]$ and the cost $\$(e)$ of each edge $e$
 $G'$ is the same as $l(e)$ in $G$. The balance function of $G'$ will be $-1$ for
 $s$, $1$ for $t$, and 0 for all other vertices. $G'$ can be constructed in
 $O(|V| + |E|)$ time by brute force. The shortest path length in
-$G$ will correspond exactly to the minimum-cost flow in $G'$, or "Negative
-Cycle" if the minimum-cost flow returns the same.
+$G$ will correspond exactly to the cost of a minimum-cost flow in $G'$, or "Negative
+Cycle" if the minimum-cost flow algorithm returns the same.
 
 \section{Proof of correctness}
 
