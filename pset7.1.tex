@@ -47,18 +47,37 @@ By the maxflow-mincut theorem, $m$ is also the size of the minimum $(a,b)$ cut.
 
 I claim that the smallest cut of the graph is of size $k$.
 
-The cut $(\{a\}, G\setminus \{a\})$ is of size $k$.
+Any other cut has at least one vertex besides $a$ and $b$ in each of the
+partition sets.
 
-The cut $(G\setminus \{b\}, \{b\})$ is of size $k$.
+Let set $L_a$ be the set of vertices in the left side of the bipartite graph
+which are in a partition set with $a$, and similarly for $L_b, R_a, R_b$.
 
-Any other cut is size $\geq k$ because it will include at least one of the original
-(not $a$ or $b$) vertices in the left partition and in the right partition, as
-those are the remaining cases.
+if $|L_a| \geq |R_a|$, there will be at least $d(|L_a| - |R_a|)$ edges from $L_a$
+to $R_b$.
 
-For any vertex in the right side of the bipartite graph, it will contribute 1 to the
-cut size. If it is in the $a$ side of the cut, the edge neighboring it with
-$b$ will be counted. If it is in the $b$ side of the cut, if it is connected
-to a vertex in the left side of the bipartite graph which is in the $a$ side
-of the cut, the
+We also know that $|R_b| \geq |L_a|$, since $|L_a|+|L_b| =|R_a|+|R_b|=k$.
+
+We want to find the minimum number of edges from $R_a$ to $L_b$. We know that
+there are at least $d(|L_a| - |R_a|)$ edges from $L_a$ to $R_b$. This leaves
+$d(|R_b| - |L_a| + |R_a|)$ connections left that $R_b$ must fill. We then get
+$d(|L_b| - |R_b| + |L_a| - |R_a|)$ edges between $R_a$ and $L_b$. There will
+then be a total of $d(|L_a|-|R_a|) + d(|L_b| - |R_b| + |L_a| - |R_a|) + |R_a|
++ |L_b|$ edges.
+
+Because of the relationship $|L_a|+|L_b| =|R_a|+|R_b|=k$, this can be
+simplified to $(d-1)(|L_a| -|R_a|) + k$. This will always be at least $k$
+because we assumed $|L_a| \geq |R_a|$, if $d \geq 1$.
+
+The same argument applies for $|L_a| \leq |R_a|$ to show that the minimum
+possible cut is $k$.
+
+Since $k$ is the minimum cut capicity, it is also the maximum flow capacity,
+and this flow can be separated into $k$ edge-disjoint paths. These
+edge-disjoint paths correspond to a matching of size $k$ in the original
+graph. Each left vertex has only one edge going to it, and each right vertex
+has only one edge coming from it in these paths, no vertices are shared
+between edges that were in the original graph. There are $k = \frac{|V|}{2}$
+edges aside from the extra edges we added, so it is a perfect matching.
 
 \end{document}

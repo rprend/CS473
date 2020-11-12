@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{}
+
+\subsection{Problem description}
+
+Given the region $P$ in 2D space, defined by 
+
+$$\forall i, a_i x + b_i y \leq c_i $$,
+
+define a linear program whose solution describes the largest axis-aligned
+square that lies entirely within $P$.
+
+\subsection{Solution}
+
+The reduction is based on 3 variables representing the $x$ and $y$ coordinates
+of a potential square, and the dimension of the square. From those 3
+variables, we can compute the $x$ and $y$ coordinates of each corner of the
+square. Since $P$ is convex, the square is contained within $P$ iff each of
+the corners is within $P$. Writing down the linear program is then
+straightforward:
+
+Maximize: 
+
+$$x_{dim}$$
+
+Subject to constraints:
+
+$$\forall i, a_i x_x + b_i x_y \leq c_i$$
+$$\forall i, a_i x_x + a_i x_{dim} + b_i x_y \leq c_i$$
+$$\forall i, a_i x_x + b_i x_y + b_i x_{dim} \leq c_i$$
+$$\forall i, a_i x_x + a_i x_{dim} + b_i x_y + b_i x_{dim} \leq c_i$$
+
+\section{}
+
+\subsection{Problem description}
+
+Given the region $P$ in 2D space, defined by 
+
+$$\forall i, a_i x + b_i y \leq c_i $$,
+
+define a linear program whose solution describes the maximum-perimeter axis-aligned
+rectangle that lies entirely within $P$.
+
+\subsection{Solution}
+
+The reduction is nearly the same as the first part, with the exception that
+now we must define the parameters of the rectangle based on 4 variables
+instead of 3 because the width and height can differ, and additionally we need
+to maximize the perimeter, which is equivalent to maximizing the sum of the
+dimensions.
+
+Maximize: 
+
+$$x_w + x_h$$
+
+Subject to constraints:
+
+$$\forall i, a_i x_x + b_i x_y \leq c_i$$
+$$\forall i, a_i x_x + a_i x_w + b_i x_y \leq c_i$$
+$$\forall i, a_i x_x + b_i x_y + b_i x_h \leq c_i$$
+$$\forall i, a_i x_x + a_i x_w + b_i x_y + b_i x_h \leq c_i$$
+\end{document}
