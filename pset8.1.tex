@@ -41,7 +41,8 @@ Let $f$ be a minimum-cost $(s,t)$ path, with cost $k_f$, and
 $p$ be a shortest $(s,t)$ path, with length $k_p$.
 
 To prove $k_f = k_p$, we first need to prove that a minimum cost $(s,t)$ flow
-in $G'$ will never have an edge with flow value not equal to 1 or 0, provided there
+in $G'$ will never have an edge with flow value not equal to 1 or 0, or else
+an alternative flow exists with cost $k_f$ where this is the case, provided there
 are no negative-cost cycles.
 
 If $(u,v)$ is a flow edge in $f$, where the flow value of $(u,v)$ is greater than 1,
@@ -63,11 +64,11 @@ contradiction which implies that no such edge can exist in $f$.
 If $(u,v)$ is a flow edge in $f$, where the flow value of $(u,v)$ is in range
 $(0,1)$, there must exist at least 2 flow paths from $s$ to $t$ in $f$, or in other
 words, some quantity of the 1 unit of outflow from $s$ is traveling to $t$ by
-a different path than some other quantity. Clearly, however, one of these
-routes is cheaper, and it would be cheaper to send all flow through it, which
-is feasible because all the upper bound capacities are $\infty$. This is a
-contradiction which implies no such edge can exist. Therefore all flow values
-must be either 1 or 0.
+a different path than some other quantity. Clearly, however, either of these
+routes is at least as cheap as all the others, and it would be at least as cheap to send
+all flow through it, which is always feasible because all the upper bound capacities
+are $\infty$. Without loss of generality, consider $f$ to be the cheapest flow
+alternative with no flow values in $(0,1)$.
 
 Case 1: $k_f < k_p$
 
