@@ -24,6 +24,10 @@ $O(|V| + |E|)$ time by brute force. The shortest path length in
 $G$ will correspond exactly to the cost of a minimum-cost flow in $G'$, or "Negative
 Cycle" if the minimum-cost flow algorithm returns the same.
 
+The fastest known minimum cost flow algorithm runs in $O(|E|^2 \log^2(|V|))$
+time, so since $G'$ is the same size as $G$, the whole algorithm will run in
+$O(|E|^2 \log^2(|V|))$.
+
 \section{Proof of correctness}
 
 Negative cycles: A negative cycle in $G$ implies no feasible minimum-cost
