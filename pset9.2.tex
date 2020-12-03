@@ -1,0 +1,102 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{macros,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+\usepackage{amsmath}
+\usepackage{esvect}
+\usepackage{bbm}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+% =========================================================
+%   Define common stuff for solution headers
+% =========================================================
+\Class{CS/ECE 473}
+\Semester{Fall 2020}
+\Authors{3}
+\AuthorOne{Ryan Prendergast}{ryanp4}
+\AuthorTwo{Noah Watson}{nwatson3}
+\AuthorThree{Lawson Probasco}{lawsonp2}
+%\Section{}
+
+% =========================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+
+\HomeworkHeader{9}{2}
+\begin{enumerate}[(a)]
+
+\item
+\begin{solution}
+    Code below. \\
+
+    This modification of Bellman Ford runs the relaxation algorithm $k$ times. Each of these iterations computes the intermediate shortest paths up to length $i$ on the $i$-th iteration, therefore relaxing $k$ times computes the intermediate shortest paths up to length $k$ on the $k$-th iteration. This algorithm runs in $O(kE)$ time with linear ($O(kV)$) space.
+\end{solution}
+
+\item
+\begin{solution}
+    The input for max $s-t$ $k$ flow consists of the directed graph $G = (V,E)$, source and sink $s,t$ respectively, capacity function $c(e)$ for each edge $e$, and a set of paths of length at most $k$ denotes ${P^{(k)}}_{s,t}$. The following linear program computes the flow function $f$.
+    \begin{align*}
+        \text{maximize} & \sum_{p \in P^{(k)}_{s,t}} f(p) \\
+        \text{subect to} & \sum_{p \in P^{(k)}_{s,t}; e \in p} f(p) \leq c(e) \forall e \in E \\
+        & f(p) \geq 0
+    \end{align*}
+
+    The objective function is maximizing the amount of flow going through each one of the paths ${p \in P^{(k)}_{s,t}}$. The constraints make sure that these flow values through each path are at least $0$ and also that they satisfy the capacity constraint, e.g. the amount of flow going through and edge corresponds to the path-wise flow of all paths that include that edge, and that value is bounded by capacity for that edge. It should be noted that the path based construction of flow implicitly guarantees the conservation constraint. The optimization of this linear program will produce precisely the max $s-t$ $k$ flow, since this linear program captures path-based flow for only paths that are in ${p \in P^{(k)}_{s,t}}$.
+\end{solution}
+
+\item
+\begin{solution}
+    \begin{align*}
+        \text{minimize} & \sum_{(u \to v) \in E} c(u \to v) y_{u,v} & \\
+        \text{subect to} & \sum_{(u \to v) \in p} y_{u,v} \geq 1 & \forall {p \in P^{(k)}_{s,t}} \\
+        & y_{u,v} \geq 0 & \forall (u \to v) \in E
+    \end{align*}
+
+    The objective function is minimizing a weighted value applied to each edge, subject to the primary constraint that for each path $p$ there must be a collective value of at least one applied to all edges along that path.
+\end{solution}
+
+\end{enumerate}
+
+referenced: http://theory.stanford.edu/~trevisan/cs261/lecture15.pdf
+
+\clearpage
+\end{document}
