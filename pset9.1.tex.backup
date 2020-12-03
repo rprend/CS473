@@ -1,0 +1,47 @@
+\documentclass{article}
+
+\usepackage{amsfonts}
+
+\begin{document}
+
+Minimize
+
+$$\sum_{i,j} y_j x_{i,j} d(i,j)$$
+
+Subject to
+
+$$\forall_i [\sum_j x_{i,j} = 1]$$
+$$\sum_i y_i \geq k$$
+$$\forall_i y_i \leq 1$$
+$$\forall_i y_i \geq 0$$
+$$\forall_{i,j} x_{i,j} \leq 1$$
+$$\forall_{i,j} x_{i,j} \geq 0$$
+$$\forall_i y_i \in \mathbb{Z}$$
+
+This will yield the correct solution because the $y$ variables, which
+represent the choices of midpoints, will be forced to either 0 or 1, and there
+will always be $k$ of them. The $x$ variables can vary in the range between 0
+and 1, but the optimal solution will always settle on either 0 or 1, because
+if there are multiple median points where the point i is assigned to each with
+a weighted average such that the weights sum to 1, a smaller value for the
+target function can be acheived merely by shifting all the weight to the
+smallest distance midpoint.
+
+Relaxation in canonical form:
+
+Maximize
+
+$$-\sum_{i,j} y_j x_{i,j} d(i,j)$$
+
+Subject to
+
+$$\forall_i [-\sum_j x_{i,j} \leq -1]$$
+$$\forall_i [\sum_j x_{i,j} \leq 1]$$
+$$-\sum_i y_i \leq -k$$
+$$\forall_i y_i \leq 1$$
+$$\forall_{i,j} x_{i,j} \leq 1$$
+
+$$\forall_{i,j} x_{i,j} \geq 0$$
+$$\forall_i y_i \geq 0$$
+
+\end{document}
