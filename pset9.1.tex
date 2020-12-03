@@ -1,0 +1,96 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{macros,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+\usepackage{amsmath}
+\usepackage{esvect}
+\usepackage{bbm}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+% =========================================================
+%   Define common stuff for solution headers
+% =========================================================
+\Class{CS/ECE 473}
+\Semester{Fall 2020}
+\Authors{3}
+\AuthorOne{Ryan Prendergast}{ryanp4}
+\AuthorTwo{Noah Watson}{nwatson3}
+\AuthorThree{Lawson Probasco}{lawsonp2}
+%\Section{}
+
+% =========================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+
+\HomeworkHeader{9}{1}
+\begin{enumerate}[(a)]
+    \item Write an integer linear programming formulation for k-median.
+    \begin{solution}
+We define a linear programming with two types of variables according to the problem description. The first is $y_q, q\in P$. $y_q \in \{0,1\}$ takes the value one if the point $q$ is one of the k centers, and it takes the value zero otherwise. There are n such variables. \\ \\
+The second type of variable is $x_{p,q}, p,q \in P$. $x_{p,q} \in \{0,1\}$ takes the value one if the point $p$ is assigned to the point q. It takes the value zero otherwise. There are $n^2$ such variables \\ \\
+Our objective is to minimize the sum of the distances from each point to the point which it is assigned to. We must in the constraints ensure that there are exactly k centers, each point $p$ is assigned to exactly 1 other point, and that if $p$ is assigned to $q$, $q$ is a center (in other words, if $x_{p,q}=1$, then $y_q=1$ as well. 
+\begin{align*}
+& min \sum_{p \in P} \sum_{q \in P} d(p,q)* x_{p,q} & \text{Min the sum distances to cluster centers}\\
+& \text{s.t.  } \\
+\sum_{p \in P} y_p &= k  & \text{There must be exactly k centers}\\
+\sum_{q \in P} x_{p,q} &= 1, \forall p \in P & \text{Each point belongs to one center} \\
+x_{p,q} &\leq y_q, \forall p,q \in P & \text{Each point can only belong to a center} \\
+x_{p,q}, y_q &\in \{0,1\} & \text{Our variables take values 0 or 1}
+\end{align*}
+The optimal solution to k-median is equivalent to the above linear program. Our constraints ensure that, as with k-median, there are k cluster centers decided by those that minimize the sum point distances to the cluster they are assigned to. \\ \\
+We can also relax the constraint that the x variables must be integers, making the simple change to our objective function and our constraints to replace $x_{p,q}$ with  $\mathbb{1}[x_{p,q} > 0]$. Thus, any real positive real number is equivalent, instead of us checking with the value 1.
+    \end{solution}
+    \item Write the dual of the LP relaxation.
+    \begin{solution}
+We define the variables of the dual $a_{p,q}$ and $b_q$ which correspond to $x$ and $y$, respectively. Thus our dual is:
+	\begin{align*}
+& max \sum_{p \in P} \sum_{q \in P} d(p,q)* a_{p,q} & \\
+& \text{s.t.  } \\
+\sum_{q \in P} b_q * a_{p,q} &\leq d(p,q) \forall p \in P \\
+a_{p,q} &\geq b_q, \forall p,q \in P \\
+\end{align*}
+
+    \end{solution}
+\end{enumerate}
+
+\clearpage
+\end{document}
